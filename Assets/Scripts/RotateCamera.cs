@@ -15,8 +15,8 @@ public class RotateCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Rotate the camera around the centre of the platform based on player input
         float horizontalInput = Input.GetAxis("Horizontal");
-
         transform.Rotate(Vector3.up, horizontalInput * Time.deltaTime * rotationSpeed);
     }
 }
