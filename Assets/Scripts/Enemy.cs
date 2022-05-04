@@ -15,6 +15,11 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.Find("Player");
         enemyRb = GetComponent<Rigidbody>();
+        // If the enemy is a pusher repeatedly try to push the player
+        if(gameObject.name == "EnemyPusher(Clone)")
+        {
+            InvokeRepeating("PushPlayer", 2, 1);
+        }
     }
 
     // Update is called once per frame
@@ -23,12 +28,19 @@ public class Enemy : MonoBehaviour
         // Makes the enemy move towards the player
         Vector3 lookDirection = MoveDirection();
         enemyRb.AddForce(lookDirection * speed);
-
+        
         // Destroy enemys that fall of the platform
         if(transform.position.y < -10)
         {
             Destroy(gameObject);
         }
+    }
+
+    // Forcefully pushes toward the player
+    private void PushPlayer()
+    {
+        Vector3 lookDirection = MoveDirection();
+        enemyRb.AddForce(lookDirection * speed * 2, ForceMode.VelocityChange);
     }
 
     // Returns the direction the enemy is supposed to move in

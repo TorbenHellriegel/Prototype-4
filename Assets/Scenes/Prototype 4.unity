@@ -485,6 +485,10 @@ MonoBehaviour:
   - {fileID: 8930675940030207481, guid: 4d74c3cfb24c2524690a9d9ec76d4748, type: 3}
   - {fileID: 8194769008421493557, guid: dda3208f1808acc4080f1fff87c0b82b, type: 3}
   - {fileID: 5910943207624514926, guid: 1896ccc6a59f06a4eb1aefb7eff8f1b3, type: 3}
+  - {fileID: 696648522079933793, guid: a66fcca33ccf0b148a7b1b69a4b81da8, type: 3}
+  - {fileID: 341003029387800636, guid: dc47150ccc6120949b0a5564095b073d, type: 3}
+  - {fileID: 4862185120153570134, guid: c1f7b193e2a2cef4cb42b6db5519aa0f, type: 3}
+  - {fileID: 2474294838099421560, guid: bddbc008a77781c4ca34936c7607e07e, type: 3}
   powerupPrefabs:
   - {fileID: 8594291001533957890, guid: 62badf97fa874d040a328ea50efb8dea, type: 3}
 --- !u!4 &1050764836

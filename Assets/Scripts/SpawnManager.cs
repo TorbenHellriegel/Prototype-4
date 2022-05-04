@@ -36,11 +36,16 @@ public class SpawnManager : MonoBehaviour
     // Spawns a certain amount of enemys
     private void SpawnEnemyWave(int numOfEnemys)
     {
+        //int[] enemyIndecies = GetWaveComposition(numOfEnemys);
         for(int i = 0; i < numOfEnemys; i++)
         {
             // Spawn arandom enemy at a random position
-            int enemyIndex = Random.Range(0, enemyPrefabs.Length);
+            int enemyIndex = Random.Range(0, Mathf.Min(enemyPrefabs.Length, waveNumber - i));
             Instantiate(enemyPrefabs[enemyIndex],  GenerateSpawnPosition(), Random.rotation);
+
+            // Add the enemy difficulty to i to prevent spawning too many powerful enemys
+            Enemy enemyScript = enemyPrefabs[enemyIndex].gameObject.GetComponent<Enemy>();
+            i += enemyScript.enemyDifficulty - 1;
         }
     }
 
@@ -58,5 +63,11 @@ public class SpawnManager : MonoBehaviour
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
 
         return new Vector3(spawnPosX, 0, spawnPosZ);
+    }
+
+    // Returns an index list of enemys which should be spawned
+    private int[] GetWaveComposition(int numOfEnemys)
+    {
+        return null;
     }
 }
