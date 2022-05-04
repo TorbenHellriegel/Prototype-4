@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,18 +11,25 @@ public class PlayerController : MonoBehaviour
     public GameObject powerupIndicator;
     public GameObject powerupIndicator2;
     public GameObject bullet;
+    public GameObject spawner;
+    public SpawnManager spawnManager;
+    public Text waveCounterText;
+    public Text pushCounterText;
 
     public bool hasPowerupMulti = false;
     public bool hasPowerupShoot = false;
     private float powerupMultiStrength = 15;
     public float speed = 1;
     public float pushForce = 1;
+    public float pushCounter;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("Focal Point");
+        spawnManager = spawner.GetComponent<SpawnManager>();
+        pushCounter = 0;
         InvokeRepeating("ShootEnemy", 1, 1);
     }
 
@@ -36,9 +45,22 @@ public class PlayerController : MonoBehaviour
         playerRb.AddForce(focalPoint.transform.forward * forwardInput * speed);
 
         // Gives the player a stong push in the direction the camera is facing
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && pushCounter > 0)
         {
             playerRb.AddForce(focalPoint.transform.forward * forwardInput * pushForce, ForceMode.Impulse);
+            pushCounter--;
+        }
+
+        // Update the ui to display wave and push counter
+        waveCounterText.text = "Wave " + spawnManager.waveNumber;
+        pushCounterText.text = "X " + pushCounter;
+
+        // If the player falls down restart the game
+        if(transform.position.y < -10)
+        {
+            spawnManager.waveNumber = Mathf.Max(1, spawnManager.waveNumber - 2);
+            transform.position = new Vector3(0, 0.2f, 0);
+            playerRb.velocity = new Vector3(0, 0, 0);
         }
     }
 
@@ -62,6 +84,12 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             StopCoroutine("Powerup2CountdownRoutine");
             StartCoroutine("Powerup2CountdownRoutine");
+        }
+        // If the player collides with push powerup increase usability counter
+        else if(other.CompareTag("PowerupPush"))
+        {
+            pushCounter += 3;
+            Destroy(other.gameObject);
         }
     }
 

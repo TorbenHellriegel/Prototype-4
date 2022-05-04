@@ -6,20 +6,22 @@ public class BulletAim : MonoBehaviour
 {
     private Rigidbody bulletRb;
     public Vector3 enemyPosition = new Vector3(0, 0, 0);
+    public Vector3 startPosition;
     private float speed = 5;
 
     // Start is called before the first frame update
     void Start()
     {
         bulletRb = GetComponent<Rigidbody>();
-        Destroy(gameObject, 0.5f);
+        startPosition = transform.position;
+        Destroy(gameObject, 1);
     }
 
     // Update is called once per frame
     void Update()
     {
         // Move bullet in the directon of the enemy
-        Vector3 lookDirection = (enemyPosition - transform.position).normalized;
+        Vector3 lookDirection = (enemyPosition - startPosition).normalized;
         bulletRb.AddForce(lookDirection * speed, ForceMode.VelocityChange);
     }
 

@@ -22,6 +22,6 @@ public class PowerupRotate : MonoBehaviour
         transform.Rotate(Vector3.up, Time.deltaTime * rotationSpeed);
 
         // Makes the powerup float up and down
-        transform.position = new Vector3(transform.position.x, Mathf.Sin(levitate)/2 + 0.5f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, Mathf.Sin(levitate)/3 + 0.4f, transform.position.z);
     }
 }

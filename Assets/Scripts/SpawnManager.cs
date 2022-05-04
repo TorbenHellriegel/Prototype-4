@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] powerupPrefabs;
     private float spawnRange = 9;
     private int enemyCount;
-    private int waveNumber;
+    public int waveNumber;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +27,18 @@ public class SpawnManager : MonoBehaviour
         // If there are no more enemys start a new wave
         if(enemyCount == 0)
         {
+            // Increase wave number
             waveNumber++;
-            SpawnEnemyWave(waveNumber);
+
+            // Spawn random new enemys exept in wave 5 spawn first boss
+            if(waveNumber == 5)
+            {
+                Instantiate(enemyPrefabs[6],  GenerateSpawnPosition(), Random.rotation);
+            }
+            else
+            {
+                SpawnEnemyWave(waveNumber);
+            }
             SpawnPowerup();
         }
     }
