@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody enemyRb;
 
     public float speed = 1;
+    public int enemyDifficulty;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,12 @@ public class Enemy : MonoBehaviour
         // Makes the enemy move towards the player
         Vector3 lookDirection = MoveDirection();
         enemyRb.AddForce(lookDirection * speed);
+
+        // Destroy enemys that fall of the platform
+        if(transform.position.y < -10)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Returns the direction the enemy is supposed to move in
